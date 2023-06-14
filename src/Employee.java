@@ -1,3 +1,5 @@
+import java.util.EnumSet;
+
 public class Employee {
     public static int idCounter = 0;
     private final int ID;
@@ -77,8 +79,32 @@ public class Employee {
                 ID, lastName, firstName, middleName, salary, department);
     }
 
+    public String toString(EnumSet<FieldFlags> flags) {
+        if (flags == FieldFlags.ALL_FIELDS) {
+            return toString();
+        }
+
+        String result = "";
+
+        if (flags.contains(FieldFlags.ID)) {
+            result += String.format("Id: %d\n", ID);
+        }
+        if (flags.contains(FieldFlags.FIO)) {
+            result += String.format("ФИО: %s %s %s\n", lastName, firstName, middleName);
+        }
+        if (flags.contains(FieldFlags.SALARY)){
+            result += String.format("Заработная плата: %.2f\n", salary);
+        }
+        if (flags.contains(FieldFlags.DEPARTMENT)){
+            result += String.format( "Отдел: %d", department);
+        }
+
+        return result;
+    }
+
     public String getNames() {
         return lastName + " " + firstName + " " + middleName;
     }
     //endregion
 }
+
